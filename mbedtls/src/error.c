@@ -581,6 +581,11 @@ void mbedtls_strerror( int ret, char *buf, size_t buflen )
         mbedtls_snprintf( buf, buflen, "ARC4 - ARC4 hardware accelerator failed" );
 #endif /* MBEDTLS_ARC4_C */
 
+#if defined(MBEDTLS_SM4_C)
+    if( use_ret == -(MBEDTLS_ERR_SM4_INVALID_INPUT_LENGTH) )
+        mbedtls_snprintf( buf, buflen, "SM4 - Invalid key length" );
+#endif /* MBEDTLS_SM4_C */
+
 #if defined(MBEDTLS_ASN1_PARSE_C)
     if( use_ret == -(MBEDTLS_ERR_ASN1_OUT_OF_DATA) )
         mbedtls_snprintf( buf, buflen, "ASN1 - Out of data when parsing an ASN1 data structure" );
