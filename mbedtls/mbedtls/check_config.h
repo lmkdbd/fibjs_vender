@@ -128,6 +128,11 @@
 #error "MBEDTLS_PK_PARSE_C defined, but not all prerequesites"
 #endif
 
+#if defined(MBEDTLS_SM2_C) &&                                       \
+    ( !defined(MBEDTLS_SM3_C) || !defined(MBEDTLS_ECP_DP_SM2P256V1_ENABLED) )
+#error "MBEDTLS_SM2_C defined, but not all prerequisites"
+#endif
+
 #if defined(MBEDTLS_ENTROPY_C) && (!defined(MBEDTLS_SHA512_C) &&      \
                                     !defined(MBEDTLS_SHA256_C))
 #error "MBEDTLS_ENTROPY_C defined, but not all prerequisites"
