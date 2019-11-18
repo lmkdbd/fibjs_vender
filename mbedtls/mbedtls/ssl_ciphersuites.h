@@ -238,7 +238,8 @@ extern "C" {
 
 #define MBEDTLS_TLS_ECJPAKE_WITH_AES_128_CCM_8          0xC0FF  /**< experimental */
 
-/* Standard comes from GM/T 0024-2014 <SSL VPN specification>: Table 2
+/* GM/T 0024-2014 Chinese National Standard refers to: http://www.oscca.gov.cn/
+ * Ref: <SSL VPN specification> Table 2
  * SM2 implement the ECP and ECDHE, and SM9 implement the IBC and IBSDH.
  */
 #define MBEDTLS_GM_ECDHE_WITH_SM1_SM3                   0xE001
