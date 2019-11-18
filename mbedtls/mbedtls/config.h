@@ -2867,7 +2867,7 @@
  *
  * Module:  library/sm2.c
  *
- * Requires: MBEDTLS_ECP_C, MBEDTLS_SM3_C
+ * Requires: MBEDTLS_ECP_C, MBEDTLS_MD_C
  */
 #define MBEDTLS_SM2_C
 
