@@ -349,7 +349,9 @@ static int ssl_parse_supported_elliptic_curves( mbedtls_ssl_context *ssl,
 
     return( 0 );
 }
+#endif /* MBEDTLS_ECDH_C || MBEDTLS_ECDSA_C || MBEDTLS_SM2_C */
 
+#if defined(MBEDTLS_ECDH_C)
 static int ssl_parse_supported_point_formats( mbedtls_ssl_context *ssl,
                                               const unsigned char *buf,
                                               size_t len )
@@ -1747,7 +1749,9 @@ read_record_header:
                 if( ret != 0 )
                     return( ret );
                 break;
+#endif /* MBEDTLS_ECDH_C || MBEDTLS_ECDSA_C || MBEDTLS_SM2_C */
 
+#if defined(MBEDTLS_ECDH_C)
             case MBEDTLS_TLS_EXT_SUPPORTED_POINT_FORMATS:
                 MBEDTLS_SSL_DEBUG_MSG( 3, ( "found supported point formats extension" ) );
                 ssl->handshake->cli_exts |= MBEDTLS_TLS_EXT_SUPPORTED_POINT_FORMATS_PRESENT;
@@ -2728,10 +2732,9 @@ static int ssl_write_certificate_request( mbedtls_ssl_context *ssl )
 #if defined(MBEDTLS_ECDSA_C)
     p[1 + ct_len++] = MBEDTLS_SSL_CERT_TYPE_ECDSA_SIGN;
 #endif
-#warning "@TODO: Need definitions"
-// #if defined(MBEDTLS_SM2_C)
-//     p[1 + ct_len++] = MBEDTLS_SSL_CERT_TYPE_SM2_SIGN;
-// #endif
+#if defined(MBEDTLS_SM2_C)
+    p[1 + ct_len++] = MBEDTLS_SSL_CERT_TYPE_SM2_SIGN;
+#endif
 
     p[0] = (unsigned char) ct_len++;
     p += ct_len;
@@ -2772,6 +2775,10 @@ static int ssl_write_certificate_request( mbedtls_ssl_context *ssl )
 #if defined(MBEDTLS_ECDSA_C)
             p[2 + sa_len++] = hash;
             p[2 + sa_len++] = MBEDTLS_SSL_SIG_ECDSA;
+#endif
+#if defined(MBEDTLS_SM2_C)
+            p[2 + sa_len++] = hash;
+            p[2 + sa_len++] = MBEDTLS_SSL_SIG_SM2;
 #endif
         }
 
@@ -2998,11 +3005,6 @@ static int ssl_write_server_key_exchange( mbedtls_ssl_context *ssl )
         dig_signed = p;
         dig_signed_len = len;
 #endif
-#warning "@TODO: Need definitions"
-// #if defined(MBEDTLS_SM2_C)
-//         p[2 + sa_len++] = ssl->handshake->verify_sig_alg;
-//         p[2 + sa_len++] = MBEDTLS_SSL_SIG_SM2;
-// #endif
 
         p += len;
         n += len;
