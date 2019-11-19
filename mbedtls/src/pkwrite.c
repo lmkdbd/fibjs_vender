@@ -188,7 +188,9 @@ int mbedtls_pk_write_pubkey( unsigned char **p, unsigned char *start,
     else
 #endif
 #if defined(MBEDTLS_ECP_C)
-    if( mbedtls_pk_get_type( key ) == MBEDTLS_PK_ECKEY )
+    if( mbedtls_pk_get_type( key ) == MBEDTLS_PK_ECKEY ||
+            mbedtls_pk_get_type( key ) == MBEDTLS_PK_ECDSA ||
+            mbedtls_pk_get_type( key ) == MBEDTLS_PK_SM2 )
         MBEDTLS_ASN1_CHK_ADD( len, pk_write_ec_pubkey( p, start, mbedtls_pk_ec( *key ) ) );
     else
 #endif
@@ -229,7 +231,9 @@ int mbedtls_pk_write_pubkey_der( mbedtls_pk_context *key, unsigned char *buf, si
     }
 
 #if defined(MBEDTLS_ECP_C)
-    if( mbedtls_pk_get_type( key ) == MBEDTLS_PK_ECKEY )
+    if( mbedtls_pk_get_type( key ) == MBEDTLS_PK_ECKEY ||
+            mbedtls_pk_get_type( key ) == MBEDTLS_PK_ECDSA ||
+            mbedtls_pk_get_type( key ) == MBEDTLS_PK_SM2  )
     {
         MBEDTLS_ASN1_CHK_ADD( par_len, pk_write_ec_param( &c, buf, mbedtls_pk_ec( *key ) ) );
     }
@@ -331,7 +335,9 @@ int mbedtls_pk_write_key_der( mbedtls_pk_context *key, unsigned char *buf, size_
     else
 #endif /* MBEDTLS_RSA_C */
 #if defined(MBEDTLS_ECP_C)
-    if( mbedtls_pk_get_type( key ) == MBEDTLS_PK_ECKEY )
+    if( mbedtls_pk_get_type( key ) == MBEDTLS_PK_ECKEY ||
+            mbedtls_pk_get_type( key ) == MBEDTLS_PK_ECDSA ||
+            mbedtls_pk_get_type( key ) == MBEDTLS_PK_SM2 )
     {
         mbedtls_ecp_keypair *ec = mbedtls_pk_ec( *key );
         size_t pub_len = 0, par_len = 0;
@@ -522,7 +528,9 @@ int mbedtls_pk_write_key_pem( mbedtls_pk_context *key, unsigned char *buf, size_
     else
 #endif
 #if defined(MBEDTLS_ECP_C)
-    if( mbedtls_pk_get_type( key ) == MBEDTLS_PK_ECKEY )
+    if( mbedtls_pk_get_type( key ) == MBEDTLS_PK_ECKEY ||
+            mbedtls_pk_get_type( key ) == MBEDTLS_PK_ECDSA ||
+            mbedtls_pk_get_type( key ) == MBEDTLS_PK_SM2 )
     {
         begin = PEM_BEGIN_PRIVATE_KEY_EC;
         end = PEM_END_PRIVATE_KEY_EC;

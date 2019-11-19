@@ -31,6 +31,7 @@
 
 #include "mbedtls/oid.h"
 #include "mbedtls/rsa.h"
+#include "mbedtls/sm2.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -379,6 +380,30 @@ static const oid_sig_alg_t oid_sig_alg[] =
         MBEDTLS_MD_SHA224,   MBEDTLS_PK_ECDSA,
     },
     {
+        { ADD_LEN( MBEDTLS_OID_SM2_SM3 ),           "sm2-with-sm3",         "SM2 with SM3" },
+        MBEDTLS_MD_SM3,     MBEDTLS_PK_SM2,
+    },
+    {
+        { ADD_LEN( MBEDTLS_OID_SM2_SHA1 ),          "sm2-with-sha1",        "SM2 with SHA1" },
+        MBEDTLS_MD_SHA1,    MBEDTLS_PK_SM2,
+    },
+    {
+        { ADD_LEN( MBEDTLS_OID_SM2_SHA256 ),        "sm2-with-sha256",      "SM2 with SHA256" },
+        MBEDTLS_MD_SHA256,  MBEDTLS_PK_SM2,
+    },
+    {
+        { ADD_LEN( MBEDTLS_OID_SM2_SHA512 ),        "sm2-with-sha512",      "SM2 with SHA512" },
+        MBEDTLS_MD_SHA512,  MBEDTLS_PK_SM2,
+    },
+    {
+        { ADD_LEN( MBEDTLS_OID_SM2_SHA224 ),        "sm2-with-sha224",      "SM2 with SHA224" },
+        MBEDTLS_MD_SHA224,  MBEDTLS_PK_SM2,
+    },
+    {
+        { ADD_LEN( MBEDTLS_OID_SM2_SHA384 ),        "sm2-with-sha384",      "SM2 with SHA384" },
+        MBEDTLS_MD_SHA384,  MBEDTLS_PK_SM2,
+    },
+    {
         { ADD_LEN( MBEDTLS_OID_ECDSA_SHA256 ),     "ecdsa-with-SHA256",    "ECDSA with SHA256" },
         MBEDTLS_MD_SHA256,   MBEDTLS_PK_ECDSA,
     },
@@ -433,6 +458,10 @@ static const oid_pk_alg_t oid_pk_alg[] =
     {
         { ADD_LEN( MBEDTLS_OID_EC_ALG_ECDH ),          "id-ecDH",          "EC key for ECDH" },
         MBEDTLS_PK_ECKEY_DH,
+    },
+    {
+        { ADD_LEN( MBEDTLS_OID_GM_SM2 ),               "id-sm2",    "SM2" },
+        MBEDTLS_PK_SM2,
     },
     {
         { NULL, 0, NULL, NULL },
@@ -548,6 +577,10 @@ static const oid_cipher_alg_t oid_cipher_alg[] =
         MBEDTLS_CIPHER_DES_CBC,
     },
     {
+        { ADD_LEN( MBEDTLS_OID_EC_SM2P256R1 ),      "sm2p256r1",   "sm2p512r1" },
+        MBEDTLS_ECP_DP_SM2P256R1,
+    },
+    {
         { ADD_LEN( MBEDTLS_OID_DES_EDE3_CBC ),         "des-ede3-cbc", "DES-EDE3-CBC" },
         MBEDTLS_CIPHER_DES_EDE3_CBC,
     },
@@ -646,6 +679,10 @@ static const oid_md_hmac_t oid_md_hmac[] =
     {
         { ADD_LEN( MBEDTLS_OID_HMAC_SHA224 ),    "hmacSHA224",    "HMAC-SHA-224" },
         MBEDTLS_MD_SHA224,
+    },
+    {
+        { ADD_LEN( MBEDTLS_OID_GM_SM3 ),               "id-sm3",       "SM3" },
+        MBEDTLS_MD_SM3,
     },
     {
         { ADD_LEN( MBEDTLS_OID_HMAC_SHA256 ),    "hmacSHA256",    "HMAC-SHA-256" },
