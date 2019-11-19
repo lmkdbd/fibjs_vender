@@ -6223,6 +6223,7 @@ static int ssl_append_key_cert( mbedtls_ssl_key_cert **head,
                                 mbedtls_x509_crt *cert,
                                 mbedtls_pk_context *key )
 {
+    int ret = 0;
     mbedtls_ssl_key_cert *new_cert;
 
     new_cert = mbedtls_calloc( 1, sizeof( mbedtls_ssl_key_cert ) );
@@ -6232,6 +6233,10 @@ static int ssl_append_key_cert( mbedtls_ssl_key_cert **head,
     new_cert->cert = cert;
     new_cert->key  = key;
     new_cert->next = NULL;
+    if( ( ret = mbedtls_pk_change_key_type( key,
+                    mbedtls_pk_get_type( &cert->pk ) ) ) ) {
+        return( ret );
+    }
 
     /* Update head is the list was null, else add to the end */
     if( *head == NULL )
