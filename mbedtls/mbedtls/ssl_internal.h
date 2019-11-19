@@ -233,7 +233,7 @@ struct mbedtls_ssl_handshake_params
 #endif
 #endif /* MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED */
 #if defined(MBEDTLS_ECDH_C) || defined(MBEDTLS_ECDSA_C) || \
-    defined(MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED)
+    defined(MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED) || defined(MBEDTLS_SM2_C)
     const mbedtls_ecp_curve_info **curves;      /*!<  Supported elliptic curves */
 #endif
 #if defined(MBEDTLS_KEY_EXCHANGE__SOME__PSK_ENABLED)

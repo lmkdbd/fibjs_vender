@@ -2023,6 +2023,7 @@
  * Caller:  library/ecdh.c
  *          library/ecdsa.c
  *          library/ecjpake.c
+ *          library/sm2.c
  *
  * Requires: MBEDTLS_BIGNUM_C and at least one MBEDTLS_ECP_DP_XXX_ENABLED
  */
@@ -2866,6 +2867,7 @@
  * Enable the SM2 public key cryptographic algorithm based on elliptic curves.
  *
  * Module:  library/sm2.c
+ * Caller:
  *
  * Requires: MBEDTLS_SM3_C, MBEDTLS_ECP_C
  */

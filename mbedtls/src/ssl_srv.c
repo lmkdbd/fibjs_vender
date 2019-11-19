@@ -283,7 +283,7 @@ static int ssl_parse_signature_algorithms_ext( mbedtls_ssl_context *ssl,
           MBEDTLS_KEY_EXCHANGE__WITH_CERT__ENABLED */
 
 #if defined(MBEDTLS_ECDH_C) || defined(MBEDTLS_ECDSA_C) || \
-    defined(MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED)
+    defined(MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED) || defined(MBEDTLS_SM2_C)
 static int ssl_parse_supported_elliptic_curves( mbedtls_ssl_context *ssl,
                                                 const unsigned char *buf,
                                                 size_t len )
@@ -389,7 +389,7 @@ static int ssl_parse_supported_point_formats( mbedtls_ssl_context *ssl,
     return( 0 );
 }
 #endif /* MBEDTLS_ECDH_C || MBEDTLS_ECDSA_C ||
-          MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED */
+          MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED || MBEDTLS_SM2_C*/
 
 #if defined(MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED)
 static int ssl_parse_ecjpake_kkpp( mbedtls_ssl_context *ssl,
@@ -1739,7 +1739,7 @@ read_record_header:
           MBEDTLS_KEY_EXCHANGE__WITH_CERT__ENABLED */
 
 #if defined(MBEDTLS_ECDH_C) || defined(MBEDTLS_ECDSA_C) || \
-    defined(MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED)
+    defined(MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED) || defined(MBEDTLS_SM2_C)
             case MBEDTLS_TLS_EXT_SUPPORTED_ELLIPTIC_CURVES:
                 MBEDTLS_SSL_DEBUG_MSG( 3, ( "found supported elliptic curves extension" ) );
 
@@ -1757,7 +1757,7 @@ read_record_header:
                     return( ret );
                 break;
 #endif /* MBEDTLS_ECDH_C || MBEDTLS_ECDSA_C ||
-          MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED */
+          MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED || MBEDTLS_SM2_C*/
 
 #if defined(MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED)
             case MBEDTLS_TLS_EXT_ECJPAKE_KKPP:
@@ -2229,7 +2229,7 @@ static void ssl_write_max_fragment_length_ext( mbedtls_ssl_context *ssl,
 #endif /* MBEDTLS_SSL_MAX_FRAGMENT_LENGTH */
 
 #if defined(MBEDTLS_ECDH_C) || defined(MBEDTLS_ECDSA_C) || \
-    defined(MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED)
+    defined(MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED) || defined(MBEDTLS_SM2_C)
 static void ssl_write_supported_point_formats_ext( mbedtls_ssl_context *ssl,
                                                    unsigned char *buf,
                                                    size_t *olen )
@@ -2257,7 +2257,7 @@ static void ssl_write_supported_point_formats_ext( mbedtls_ssl_context *ssl,
 
     *olen = 6;
 }
-#endif /* MBEDTLS_ECDH_C || MBEDTLS_ECDSA_C || MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED */
+#endif /* MBEDTLS_ECDH_C || MBEDTLS_ECDSA_C || MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED || MBEDTLS_SM2_C*/
 
 #if defined(MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED)
 static void ssl_write_ecjpake_kkpp_ext( mbedtls_ssl_context *ssl,
@@ -2594,7 +2594,7 @@ static int ssl_write_server_hello( mbedtls_ssl_context *ssl )
 #endif
 
 #if defined(MBEDTLS_ECDH_C) || defined(MBEDTLS_ECDSA_C) || \
-    defined(MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED)
+    defined(MBEDTLS_KEY_EXCHANGE_ECJPAKE_ENABLED) || defined(MBEDTLS_SM2_C)
     if ( mbedtls_ssl_ciphersuite_uses_ec(
          mbedtls_ssl_ciphersuite_from_id( ssl->session_negotiate->ciphersuite ) ) )
     {
@@ -2728,6 +2728,10 @@ static int ssl_write_certificate_request( mbedtls_ssl_context *ssl )
 #if defined(MBEDTLS_ECDSA_C)
     p[1 + ct_len++] = MBEDTLS_SSL_CERT_TYPE_ECDSA_SIGN;
 #endif
+#warning "@TODO: Need definitions"
+// #if defined(MBEDTLS_SM2_C)
+//     p[1 + ct_len++] = MBEDTLS_SSL_CERT_TYPE_SM2_SIGN;
+// #endif
 
     p[0] = (unsigned char) ct_len++;
     p += ct_len;
@@ -2994,6 +2998,11 @@ static int ssl_write_server_key_exchange( mbedtls_ssl_context *ssl )
         dig_signed = p;
         dig_signed_len = len;
 #endif
+#warning "@TODO: Need definitions"
+// #if defined(MBEDTLS_SM2_C)
+//         p[2 + sa_len++] = ssl->handshake->verify_sig_alg;
+//         p[2 + sa_len++] = MBEDTLS_SSL_SIG_SM2;
+// #endif
 
         p += len;
         n += len;
