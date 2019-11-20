@@ -192,7 +192,7 @@ static int ssl_parse_renegotiation_info( mbedtls_ssl_context *ssl,
 }
 
 #if ( defined(MBEDTLS_SSL_PROTO_TLS1_2) || \
-        defined(MBEDTLS_GM_PROTO_TLS1_1) ) && \
+        defined(MBEDTLS_GM_PROTO_SSL1_1) ) && \
     defined(MBEDTLS_KEY_EXCHANGE__WITH_CERT__ENABLED)
 
 /*
@@ -281,7 +281,7 @@ static int ssl_parse_signature_algorithms_ext( mbedtls_ssl_context *ssl,
     return( 0 );
 }
 #endif /* ( MBEDTLS_SSL_PROTO_TLS1_2 ||
-          MBEDTLS_GM_PROTO_TLS1_1 ) &&
+          MBEDTLS_GM_PROTO_SSL1_1 ) &&
           MBEDTLS_KEY_EXCHANGE__WITH_CERT__ENABLED */
 
 #if defined(MBEDTLS_ECDH_C) || defined(MBEDTLS_ECDSA_C) || \
@@ -1734,7 +1734,7 @@ read_record_header:
                 break;
 
 #if ( defined(MBEDTLS_SSL_PROTO_TLS1_2) || \
-        defined(MBEDTLS_GM_PROTO_TLS1_1) ) && \
+        defined(MBEDTLS_GM_PROTO_SSL1_1) ) && \
     defined(MBEDTLS_KEY_EXCHANGE__WITH_CERT__ENABLED)
             case MBEDTLS_TLS_EXT_SIG_ALG:
                 MBEDTLS_SSL_DEBUG_MSG( 3, ( "found signature_algorithms extension" ) );
@@ -1746,7 +1746,7 @@ read_record_header:
                 sig_hash_alg_ext_present = 1;
                 break;
 #endif /* ( MBEDTLS_SSL_PROTO_TLS1_2 ||
-          MBEDTLS_GM_PROTO_TLS1_1 ) &&
+          MBEDTLS_GM_PROTO_SSL1_1 ) &&
           MBEDTLS_KEY_EXCHANGE__WITH_CERT__ENABLED */
 
 #if defined(MBEDTLS_ECDH_C) || defined(MBEDTLS_ECDSA_C) || \
@@ -2743,7 +2743,7 @@ static int ssl_write_certificate_request( mbedtls_ssl_context *ssl )
     p += ct_len;
 
     sa_len = 0;
-#if defined(MBEDTLS_SSL_PROTO_TLS1_2) || defined(MBEDTLS_GM_PROTO_TLS1_1)
+#if defined(MBEDTLS_SSL_PROTO_TLS1_2) || defined(MBEDTLS_GM_PROTO_SSL1_1)
     /*
      * Add signature_algorithms for verify (TLS 1.2)
      *
@@ -2790,7 +2790,7 @@ static int ssl_write_certificate_request( mbedtls_ssl_context *ssl )
         sa_len += 2;
         p += sa_len;
     }
-#endif /* MBEDTLS_SSL_PROTO_TLS1_2 || MBEDTLS_GM_PROTO_TLS1_1 */
+#endif /* MBEDTLS_SSL_PROTO_TLS1_2 || MBEDTLS_GM_PROTO_SSL1_1 */
 
     /*
      * DistinguishedName certificate_authorities<0..2^16-1>;
@@ -3097,7 +3097,7 @@ curve_matching_done:
 
         mbedtls_md_type_t md_alg;
 
-#if defined(MBEDTLS_SSL_PROTO_TLS1_2) || defined(MBEDTLS_GM_PROTO_TLS1_1)
+#if defined(MBEDTLS_SSL_PROTO_TLS1_2) || defined(MBEDTLS_GM_PROTO_SSL1_1)
         mbedtls_pk_type_t sig_alg =
             mbedtls_ssl_get_ciphersuite_sig_pk_alg( ciphersuite_info );
         if( MBEDTLS_SSL_VERSION_GREAT_THAN_OR_EQUAL( MBEDTLS_SSL_MINOR_VERSION_3 ) )
@@ -3115,7 +3115,7 @@ curve_matching_done:
             }
         }
         else
-#endif /* MBEDTLS_SSL_PROTO_TLS1_2 || MBEDTLS_GM_PROTO_TLS1_1 */
+#endif /* MBEDTLS_SSL_PROTO_TLS1_2 || MBEDTLS_GM_PROTO_SSL1_1 */
 #if defined(MBEDTLS_SSL_PROTO_SSL3) || defined(MBEDTLS_SSL_PROTO_TLS1) || \
     defined(MBEDTLS_SSL_PROTO_TLS1_1)
         if( ciphersuite_info->key_exchange == MBEDTLS_KEY_EXCHANGE_ECDHE_ECDSA )
@@ -3151,7 +3151,7 @@ curve_matching_done:
 #endif /* MBEDTLS_SSL_PROTO_SSL3 || MBEDTLS_SSL_PROTO_TLS1 || \
           MBEDTLS_SSL_PROTO_TLS1_1 */
 #if defined(MBEDTLS_SSL_PROTO_TLS1) || defined(MBEDTLS_SSL_PROTO_TLS1_1) || \
-    defined(MBEDTLS_SSL_PROTO_TLS1_2) || defined(MBEDTLS_GM_PROTO_TLS1_1)
+    defined(MBEDTLS_SSL_PROTO_TLS1_2) || defined(MBEDTLS_GM_PROTO_SSL1_1)
         if( md_alg != MBEDTLS_MD_NONE )
         {
             /* Info from md_alg will be used instead */
@@ -3165,7 +3165,7 @@ curve_matching_done:
         }
         else
 #endif /* MBEDTLS_SSL_PROTO_TLS1 || MBEDTLS_SSL_PROTO_TLS1_1 || \
-          MBEDTLS_SSL_PROTO_TLS1_2 || MBEDTLS_GM_PROTO_TLS1_1 */
+          MBEDTLS_SSL_PROTO_TLS1_2 || MBEDTLS_GM_PROTO_SSL1_1 */
         {
             MBEDTLS_SSL_DEBUG_MSG( 1, ( "should never happen" ) );
             return( MBEDTLS_ERR_SSL_INTERNAL_ERROR );
@@ -3183,7 +3183,7 @@ curve_matching_done:
             return( MBEDTLS_ERR_SSL_PRIVATE_KEY_REQUIRED );
         }
 
-#if defined(MBEDTLS_SSL_PROTO_TLS1_2) || defined(MBEDTLS_GM_PROTO_TLS1_1)
+#if defined(MBEDTLS_SSL_PROTO_TLS1_2) || defined(MBEDTLS_GM_PROTO_SSL1_1)
         if( MBEDTLS_SSL_VERSION_GREAT_THAN_OR_EQUAL( MBEDTLS_SSL_MINOR_VERSION_3 ) )
         {
             /*
@@ -3207,7 +3207,7 @@ curve_matching_done:
 
             n += 2;
         }
-#endif /* MBEDTLS_SSL_PROTO_TLS1_2 || MBEDTLS_GM_PROTO_TLS1_1 */
+#endif /* MBEDTLS_SSL_PROTO_TLS1_2 || MBEDTLS_GM_PROTO_SSL1_1 */
 
         if( ( ret = mbedtls_pk_sign( mbedtls_ssl_own_key( ssl ), md_alg, hash, hashlen,
                         p + 2 , &signature_len, ssl->conf->f_rng, ssl->conf->p_rng ) ) != 0 )
@@ -3343,7 +3343,7 @@ static int ssl_parse_encrypted_pms( mbedtls_ssl_context *ssl,
      * Decrypt the premaster using own private RSA key
      */
 #if defined(MBEDTLS_SSL_PROTO_TLS1) || defined(MBEDTLS_SSL_PROTO_TLS1_1) || \
-    defined(MBEDTLS_SSL_PROTO_TLS1_2) || defined(MBEDTLS_GM_PROTO_TLS1_1)
+    defined(MBEDTLS_SSL_PROTO_TLS1_2) || defined(MBEDTLS_GM_PROTO_SSL1_1)
     if( MBEDTLS_SSL_VERSION_GREAT_THAN_OR_EQUAL( MBEDTLS_SSL_MINOR_VERSION_1 ) )
     {
         if ( p + 2 > end ) {
@@ -3770,7 +3770,7 @@ static int ssl_parse_certificate_verify( mbedtls_ssl_context *ssl )
     unsigned char hash[48];
     unsigned char *hash_start = hash;
     size_t hashlen;
-#if defined(MBEDTLS_SSL_PROTO_TLS1_2) || defined(MBEDTLS_GM_PROTO_TLS1_1)
+#if defined(MBEDTLS_SSL_PROTO_TLS1_2) || defined(MBEDTLS_GM_PROTO_SSL1_1)
     mbedtls_pk_type_t pk_alg;
 #endif
     mbedtls_md_type_t md_alg;
@@ -3848,7 +3848,7 @@ static int ssl_parse_certificate_verify( mbedtls_ssl_context *ssl )
     else
 #endif /* MBEDTLS_SSL_PROTO_SSL3 || MBEDTLS_SSL_PROTO_TLS1 ||
           MBEDTLS_SSL_PROTO_TLS1_1 */
-#if defined(MBEDTLS_SSL_PROTO_TLS1_2) || defined(MBEDTLS_GM_PROTO_TLS1_1)
+#if defined(MBEDTLS_SSL_PROTO_TLS1_2) || defined(MBEDTLS_GM_PROTO_SSL1_1)
     if( MBEDTLS_SSL_VERSION_GREAT_THAN_OR_EQUAL( MBEDTLS_SSL_MINOR_VERSION_3 ) )
     {
         if( i + 2 > ssl->in_hslen )
@@ -3902,7 +3902,7 @@ static int ssl_parse_certificate_verify( mbedtls_ssl_context *ssl )
         i++;
     }
     else
-#endif /* MBEDTLS_SSL_PROTO_TLS1_2 || MBEDTLS_GM_PROTO_TLS1_1 */
+#endif /* MBEDTLS_SSL_PROTO_TLS1_2 || MBEDTLS_GM_PROTO_SSL1_1 */
     {
         MBEDTLS_SSL_DEBUG_MSG( 1, ( "should never happen" ) );
         return( MBEDTLS_ERR_SSL_INTERNAL_ERROR );
