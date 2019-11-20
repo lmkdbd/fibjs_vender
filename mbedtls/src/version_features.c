@@ -144,6 +144,15 @@ static const char *features[] = {
 #if defined(MBEDTLS_ECP_ALT)
     "MBEDTLS_ECP_ALT",
 #endif /* MBEDTLS_ECP_ALT */
+#if defined(MBEDTLS_SM4_ALT)
+    "MBEDTLS_SM4_ALT",
+#endif /* MBEDTLS_SM4_ALT */
+#if defined(MBEDTLS_SM3_ALT)
+    "MBEDTLS_SM3_ALT",
+#endif /* MBEDTLS_SM3_ALT */
+#if defined(MBEDTLS_SM2_ALT)
+    "MBEDTLS_SM2_ALT",
+#endif /* MBEDTLS_SM2_ALT */
 #if defined(MBEDTLS_MD2_PROCESS_ALT)
     "MBEDTLS_MD2_PROCESS_ALT",
 #endif /* MBEDTLS_MD2_PROCESS_ALT */
@@ -231,6 +240,15 @@ static const char *features[] = {
 #if defined(MBEDTLS_TEST_NULL_ENTROPY)
     "MBEDTLS_TEST_NULL_ENTROPY",
 #endif /* MBEDTLS_TEST_NULL_ENTROPY */
+#if defined(MBEDTLS_SM3_PROCESS_ALT)
+    "MBEDTLS_SM3_PROCESS_ALT",
+#endif /* MBEDTLS_SM3_PROCESS_ALT */
+#if defined(MBEDTLS_SM4_SETKEY_ALT)
+    "MBEDTLS_SM4_SETKEY_ALT",
+#endif /* MBEDTLS_SM4_SETKEY_ALT */
+#if defined(MBEDTLS_SM4_CRYPT_ECB_ALT)
+    "MBEDTLS_SM4_CRYPT_ECB_ALT",
+#endif /* MBEDTLS_SM4_CRYPT_ECB_ALT */
 #if defined(MBEDTLS_ENTROPY_HARDWARE_ALT)
     "MBEDTLS_ENTROPY_HARDWARE_ALT",
 #endif /* MBEDTLS_ENTROPY_HARDWARE_ALT */

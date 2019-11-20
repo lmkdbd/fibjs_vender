@@ -290,6 +290,7 @@
 //#define MBEDTLS_XTEA_ALT
 //#define MBEDTLS_SM4_ALT
 //#define MBEDTLS_SM3_ALT
+//#define MBEDTLS_SM2_ALT
 /*
  * When replacing the elliptic curve module, pleace consider, that it is
  * implemented with two .c files:
@@ -365,9 +366,12 @@
 //#define MBEDTLS_ECDSA_VERIFY_ALT
 //#define MBEDTLS_ECDSA_SIGN_ALT
 //#define MBEDTLS_ECDSA_GENKEY_ALT
-//#define MBEDTLS_SM4_SETKEY_ENC_ALT
-//#define MBEDTLS_SM4_SETKEY_DEC_ALT
+//#define MBEDTLS_SM3_PROCESS_ALT
+//#define MBEDTLS_SM4_SETKEY_ALT
 //#define MBEDTLS_SM4_CRYPT_ECB_ALT
+//#define MBEDTLS_SM2_CRYPT_ALT
+//#define MBEDTLS_SM2_SIGN_ALT
+//#define MBEDTLS_SM2_GENKEY_ALT
 
 /**
  * \def MBEDTLS_ECP_INTERNAL_ALT
