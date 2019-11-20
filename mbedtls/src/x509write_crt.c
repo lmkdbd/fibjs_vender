@@ -463,10 +463,26 @@ int mbedtls_x509write_crt_der( mbedtls_x509write_cert *ctx, unsigned char *buf, 
     /*
      * Make signature
      */
-    if( ( ret = mbedtls_md( mbedtls_md_info_from_type( ctx->md_alg ), c,
-                            len, hash ) ) != 0 )
+#if defined(MBEDTLS_SM2_C)
+    if( mbedtls_pk_get_type( ctx->issuer_key ) == MBEDTLS_PK_SM2 )
     {
-        return( ret );
+        unsigned char z[MBEDTLS_MD_MAX_SIZE];
+
+        if( ( ret = mbedtls_sm2_get_z( ctx->issuer_key->pk_ctx, ctx->md_alg,
+                        NULL, z ) ) != 0 )
+            return( ret );
+        if( ( ret = mbedtls_sm2_get_hash_zm( ctx->md_alg, z, c, len, hash ) )
+                != 0 )
+            return( ret );
+    }
+    else
+#endif /* MBEDTLS_SM2_C */
+    {
+        if( ( ret = mbedtls_md( mbedtls_md_info_from_type( ctx->md_alg ), c,
+                                len, hash ) ) != 0 )
+        {
+            return( ret );
+        }
     }
 
     if( ( ret = mbedtls_pk_sign( ctx->issuer_key, ctx->md_alg, hash, 0, sig, &sig_len,
